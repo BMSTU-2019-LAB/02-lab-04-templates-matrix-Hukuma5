@@ -148,14 +148,14 @@ TEST(Matrix, Mult) {
 TEST(Matrix, Inverse) {
     Matrix<double> m(5, 5);
 
-    for (size_t i = 0; i < m.Rows(); ++i) {
-        for (size_t j = 0; j < m.Rows(); ++j) {
+    for (int i = 0; i < m.Rows(); ++i) {
+        for (int j = 0; j < m.Rows(); ++j) {
             m[i][j] = 1 + (i * j) % 7;
         }
     }
 
     Matrix<double> I(5, 5);
-    for (size_t i = 0; i < m.Rows(); ++i) {
+    for (int i = 0; i < m.Rows(); ++i) {
         I[i][i] = 1.;
     }
 
