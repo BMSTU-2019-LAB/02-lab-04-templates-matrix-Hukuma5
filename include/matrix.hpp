@@ -3,8 +3,8 @@
 #ifndef INCLUDE_MATRIX_HPP_
 #define INCLUDE_MATRIX_HPP_
 
-#include <type_traits>
 #include <limits>
+#include <type_traits>
 
 template <class T>
 class Matrix {
@@ -76,7 +76,7 @@ class Matrix {
       for (int j = 0; j < columns; j++) {
         if (std::is_floating_point<T>::value) {
           if (abs(m[i][j] - E.m[i][j]) > std::numeric_limits<T>::epsilon())
-			  return false;
+            return false;
         } else {
           if (m[i][j] != E[i][j]) return false;
         }
@@ -84,7 +84,6 @@ class Matrix {
     }
     return true;
   }
-
 
   Matrix operator+(const Matrix& R) const {
     if (columns != R.columns || rows != R.rows) {
@@ -112,11 +111,11 @@ class Matrix {
     }
     return raz;
   }
-  Matrix operator *(const Matrix& P) {
+  Matrix operator*(const Matrix& P) {
     if (columns != P.rows) {
-		Matrix<T> error;
-		return error;
-	}
+      Matrix<T> error;
+      return error;
+    }
     Matrix<T> Pr(rows, P.columns);
     for (int i = 0; i < rows; i++)
       for (int j = 0; j < P.columns; j++) {
@@ -125,7 +124,7 @@ class Matrix {
           Pr.m[i][j] += m[i][k] * P.m[k][j];
         }
       }
-     return Pr;
+    return Pr;
   }
   Matrix Inverse() const {
     Matrix<T> A(rows, 2 * rows);
@@ -188,7 +187,6 @@ class Matrix {
 
   int Rows() const { return rows; }
   int Cols() const { return columns; }
-
 
   ~Matrix() {
     if (m != nullptr) {
