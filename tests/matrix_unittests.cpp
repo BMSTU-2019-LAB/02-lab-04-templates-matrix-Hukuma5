@@ -18,7 +18,7 @@ TEST(Matrix, Init) {
 
 TEST(Matrix, CopyAssign) {
     Matrix<int> m(2, 2);
-    Matrix<int> copy(m);
+    Matrix<int> copy(m); 
     EXPECT_EQ(m, copy);
 
     m[0][0] = 1;
@@ -39,9 +39,11 @@ TEST(Matrix, Add) {
     m[1][0] = 3;
     m[1][1] = 4;
 
+
     Matrix<int> c = m;
 
-    Matrix<int> s = m + c
+    Matrix<int> s = m + c;
+
     Matrix<int> s2 = c + c;
     EXPECT_EQ(s2, s);
 
@@ -95,6 +97,7 @@ TEST(Matrix, SubEmpty) {
     EXPECT_EQ(s.Cols(), 0);
 }
 
+
 TEST(Matrix, Mult) {
     Matrix<char> m(3, 2);
     /*
@@ -106,7 +109,7 @@ TEST(Matrix, Mult) {
     m[0][0] = 2;
     m[1][0] = 0;
     m[2][0] = 1;
-
+	
     // second colunm
     m[0][1] = 0;
     m[1][1] = 2;
