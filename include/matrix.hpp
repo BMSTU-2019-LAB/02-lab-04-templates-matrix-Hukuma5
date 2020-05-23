@@ -1,10 +1,10 @@
-// Copyright 2018 Your Name <your_email>
+пїњ// Copyright 2018 Your Name <your_email>
 
 #ifndef INCLUDE_MATRIX_HPP_
 #define INCLUDE_MATRIX_HPP_
 
 #include <type_traits>
-#include <math.h>
+#include <limits>
 
 template <class T>
 class Matrix {
@@ -27,7 +27,7 @@ class Matrix {
     }
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
-        m[i][j] = 0;//что-то не так с обнулением элементов 
+        m[i][j] = 0;
       }
     }
   }
@@ -75,7 +75,8 @@ class Matrix {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
         if (std::is_floating_point<T>::value) {
-          if (abs(m[i][j] - E.m[i][j]) > std::numeric_limits<T>::epsilon()) return false;
+          if (abs(m[i][j] - E.m[i][j]) > std::numeric_limits<T>::epsilon())
+			  return false;
         } else {
           if (m[i][j] != E[i][j]) return false;
         }
@@ -85,7 +86,7 @@ class Matrix {
   }
 
 
-  Matrix operator+(const Matrix& R) const {//R- правый операнд
+  Matrix operator+(const Matrix& R) const {
     if (columns != R.columns || rows != R.rows) {
       Matrix<T> error;
       return error;
@@ -98,7 +99,7 @@ class Matrix {
     }
     return sum;
   }
-  Matrix operator-(const Matrix& r) const {//r-правый операнд
+  Matrix operator-(const Matrix& r) const {
     if (columns != r.columns || rows != r.rows) {
       Matrix<T> error;
       return error;
@@ -111,10 +112,10 @@ class Matrix {
     }
     return raz;
   }
-  Matrix operator *(const Matrix& P) {//P-правый операнд
+  Matrix operator *(const Matrix& P) {
     if (columns != P.rows) {
-      Matrix<T> error;
-      return error;
+		Matrix<T> error;
+		return error;
 	}
     Matrix<T> Pr(rows, P.columns);
     for (int i = 0; i < rows; i++)
@@ -126,7 +127,7 @@ class Matrix {
       }
      return Pr;
   }
-  Matrix Inverse() const {//переделать операторы != и == дл€ типа double
+  Matrix Inverse() const {
     Matrix<T> A(rows, 2 * rows);
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < rows; j++) {
@@ -187,7 +188,6 @@ class Matrix {
 
   int Rows() const { return rows; }
   int Cols() const { return columns; }
- 
 
 
   ~Matrix() {
