@@ -1,10 +1,11 @@
-﻿// Copyright 2018 Your Name <your_email>
+// Copyright 2018 Your Name <your_email>
 
 #ifndef INCLUDE_MATRIX_HPP_
 #define INCLUDE_MATRIX_HPP_
 
-#include <limits>
+#include <math.h>
 #include <type_traits>
+#include <limits>
 
 template <class T>
 class Matrix {
@@ -27,7 +28,7 @@ class Matrix {
     }
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
-        m[i][j] = 0;
+        m[i][j] = 0;  //что-то не так с обнулением элементов
       }
     }
   }
@@ -85,7 +86,7 @@ class Matrix {
     return true;
   }
 
-  Matrix operator+(const Matrix& R) const {
+  Matrix operator+(const Matrix& R) const {  // R- правый операнд
     if (columns != R.columns || rows != R.rows) {
       Matrix<T> error;
       return error;
@@ -98,7 +99,7 @@ class Matrix {
     }
     return sum;
   }
-  Matrix operator-(const Matrix& r) const {
+  Matrix operator-(const Matrix& r) const {  // r-правый операнд
     if (columns != r.columns || rows != r.rows) {
       Matrix<T> error;
       return error;
@@ -111,22 +112,29 @@ class Matrix {
     }
     return raz;
   }
-  Matrix operator*(const Matrix& P) {
-    if (columns != P.rows) {
+  Matrix operator*(const Matrix& F) {
+    if (columns != F.rows) {
       Matrix<T> error;
       return error;
     }
-    Matrix<T> Pr(rows, P.columns);
-    for (int i = 0; i < rows; i++)
-      for (int j = 0; j < P.columns; j++) {
-        Pr.m[i][j] = 0;
-        for (int k = 0; k < columns; k++) {
-          Pr.m[i][j] += m[i][k] * P.m[k][j];
-        }
+    Matrix<T> proiz(rows, F.columns);
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < F.columns; j++) {
+        for (int k = 0; k < columns; k++) proiz[i][j] += m[i][k] * F.m[k][j];
       }
-    return Pr;
+    }
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < F.columns; j++) {
+        if (abs(proiz[i][j]) < 10 * std::numeric_limits<double>::epsilon())
+          proiz[i][j] = 0;
+        if (abs(abs(proiz[i][j]) - round(proiz[i][j])) <
+            10 * std::numeric_limits<double>::epsilon())
+          proiz[i][j] = round(proiz[i][j]);
+      }
+    }
+    return proiz;
   }
-  Matrix Inverse() const {
+  Matrix Inverse() const {  //переделать операторы != и == для типа double
     Matrix<T> A(rows, 2 * rows);
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < rows; j++) {
