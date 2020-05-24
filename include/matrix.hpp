@@ -197,5 +197,4 @@ class Matrix {
     }
   }
 };
-
 #endif  // INCLUDE_MATRIX_HPP_
