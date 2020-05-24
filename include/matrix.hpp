@@ -2,12 +2,10 @@
 
 #ifndef INCLUDE_MATRIX_HPP_
 #define INCLUDE_MATRIX_HPP_
-#ifndef FLT_EPSILON
-#define FLT_EPSILON 1.19209290E-07F
-#endif
 
 #include <math.h>
 #include <type_traits>
+#include <limits>
 
 template <class T>
 class Matrix {
@@ -78,7 +76,8 @@ class Matrix {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < columns; j++) {
         if (std::is_floating_point<T>::value) {
-          if (abs(m[i][j] - E.m[i][j]) > FLT_EPSILON) return false;
+          if (abs(m[i][j] - E.m[i][j]) > std::numeric_limits<T>::epsilon())
+            return false;
         } else {
           if (m[i][j] != E[i][j]) return false;
         }
@@ -208,4 +207,3 @@ class Matrix {
 };
 
 #endif  // INCLUDE_MATRIX_HPP_
-
